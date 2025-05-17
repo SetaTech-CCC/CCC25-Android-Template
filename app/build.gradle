@@ -1,0 +1,35 @@
+plugins {
+    alias(libs.plugins.agp.app)
+}
+
+android {
+    namespace = "jp.ed.shiga_ec.setatech_h.ccc.android"
+    compileSdk = 35
+
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
+        multiDexEnabled = false
+        proguardFiles += "proguard-rules.pro"
+    }
+
+    buildTypes {
+        configureEach {
+            signingConfig = signingConfigs.debug
+        }
+        release {
+            minifyEnabled = true
+            shrinkResources = true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+}
