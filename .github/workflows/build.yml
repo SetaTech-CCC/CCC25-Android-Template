@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-24.04
+    runs-on: windows-latest
 
     steps:
       - name: Checkout
@@ -25,21 +25,5 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Set environment
-        run: |
-          {
-            echo "repo=$(echo ${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/})"
-            echo "version=v$(grep versionName app/build.gradle | awk -F\" '{print $2}')"
-            echo "commit=$(echo ${{ github.sha }} | cut -c-7)"
-          } >> $GITHUB_ENV
-
       - name: Build
-        run: |
-          ./gradlew --no-daemon --warning-mode=all assembleDebug
-          cp app/build/outputs/apk/debug/app-debug.apk ${{ env.repo }}-${{ env.version }}@${{ env.commit }}.apk
-
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: "${{ env.repo }}-${{ env.version }}@${{ env.commit }}"
-          path: "${{ env.repo }}-${{ env.version }}@${{ env.commit }}.apk"
+        run: .\gradlew.bat --no-daemon --warning-mode=all assembleDebug
